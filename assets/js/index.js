@@ -142,6 +142,7 @@ navLinks.forEach((link) => {
     const selectedSection = document.getElementById(`${sectionName}`);
 
     selectedSection.classList.remove("hidden");
+    closeSidebar()
   });
 });
 
@@ -449,7 +450,7 @@ function displayPlanet(planetId) {
             </button>
           </div>
           <p id="planet-detail-description" class="text-slate-300 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
-            ${planet.englishName} is a fascinating body in our solar system. It has a gravity of ${planet.gravity} m/s² and an orbital period of ${Math.round(planet.sideralOrbit).toLocaleString()} days.
+            ${planet.description}
           </p>
         </div>
       </div>
@@ -464,7 +465,7 @@ function displayPlanet(planetId) {
         </div>
         <div class="bg-slate-900/50 rounded-lg p-4">
           <p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><i class="fas fa-weight"></i> Mass</p>
-          <p id="planet-mass" class="text-lg font-semibold">${planet.mass.massValue.toFixed(5)} × 10<sup>${planet.mass.massExponent}</sup> kg</p>
+          <p id="planet-mass" class="text-lg font-semibold">${planet.mass.massValue} × 10<sup>${planet.mass.massExponent}</sup> kg</p>
         </div>
         <div class="bg-slate-900/50 rounded-lg p-4">
           <p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><i class="fas fa-compress"></i> Density</p>
@@ -476,7 +477,7 @@ function displayPlanet(planetId) {
         </div>
         <div class="bg-slate-900/50 rounded-lg p-4">
           <p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><i class="fas fa-redo"></i> Rotation Period</p>
-          <p id="planet-rotation" class="text-lg font-semibold">${Math.round(planet.sideralRotation ).toFixed(1)} hours</p>
+          <p id="planet-rotation" class="text-lg font-semibold">${planet.sideralRotation.toFixed(2)} hours</p>
         </div>
         <div class="bg-slate-900/50 rounded-lg p-4">
           <p class="text-xs text-slate-400 mb-1 flex items-center gap-1"><i class="fas fa-moon"></i> Moons</p>
@@ -496,7 +497,7 @@ function displayPlanet(planetId) {
           <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Discovered By</span><span id="planet-discoverer" class="font-semibold text-right">${planet.discoveredBy || 'Known since antiquity'}</span></div>
           <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Discovery Date</span><span id="planet-discovery-date" class="font-semibold">${planet.discoveryDate || 'Ancient times'}</span></div>
           <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Body Type</span><span id="planet-body-type" class="font-semibold">${planet.bodyType}</span></div>
-          <div class="flex justify-between items-center py-2"><span class="text-slate-400">Volume</span><span id="planet-volume" class="font-semibold">${planet.vol.volValue.toFixed(4)} × 10<sup>${planet.vol.volExponent}</sup> km³</span></div>
+          <div class="flex justify-between items-center py-2"><span class="text-slate-400">Volume</span><span id="planet-volume" class="font-semibold">${planet.vol.volValue} × 10<sup>${planet.vol.volExponent}</sup> km³</span></div>
         </div>
       </div>
 
@@ -511,7 +512,7 @@ function displayPlanet(planetId) {
                   <li class="flex items-start">
                     <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
                     <span class="text-slate-300"
-                      >Mass : ${planet.mass.massValue.toFixed(5)} × 10<sup>${planet.mass.massExponent}</sup> kg</span
+                      >Mass : ${planet.mass.massValue} × 10<sup>${planet.mass.massExponent}</sup> kg</span
                     >
                   </li>
                   <li class="flex items-start">
@@ -523,13 +524,13 @@ function displayPlanet(planetId) {
                   <li class="flex items-start">
                     <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
                     <span class="text-slate-300"
-                      >Density: ${planet.density.toFixed(3)} g/cm³ </span
+                      >Density: ${planet.density} g/cm³ </span
                     >
                   </li>
                   <li class="flex items-start">
                     <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
                     <span class="text-slate-300"
-                      >Axial tilt: ${planet.axialTilt.toFixed(2)}°</span
+                      >Axial tilt: ${planet.axialTilt}°</span
                     >
                   </li>
                 </ul>
@@ -538,8 +539,8 @@ function displayPlanet(planetId) {
       <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
         <h4 class="font-semibold mb-4 flex items-center"><i class="fas fa-satellite text-blue-400 mr-2"></i> Orbital Characteristics</h4>
         <div class="space-y-3 text-sm">
-          <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Perihelion</span><span id="planet-perihelion" class="font-semibold">${(planet.perihelion / 1000000).toFixed(2)}M km</span></div>
-          <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Aphelion</span><span id="planet-aphelion" class="font-semibold">${(planet.aphelion / 1000000).toFixed(2)}M km</span></div>
+          <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Perihelion</span><span id="planet-perihelion" class="font-semibold">${(planet.perihelion / 1000000).toFixed(1)}M km</span></div>
+          <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Aphelion</span><span id="planet-aphelion" class="font-semibold">${(planet.aphelion / 1000000).toFixed(1)}M km</span></div>
           <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Eccentricity</span><span id="planet-eccentricity" class="font-semibold">${planet.eccentricity.toFixed(5)}</span></div>
           <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Inclination</span><span id="planet-inclination" class="font-semibold">${planet.inclination.toFixed(2)}°</span></div>
           <div class="flex justify-between items-center py-2 border-b border-slate-700"><span class="text-slate-400">Axial Tilt</span><span id="slate-400" class="font-semibold">${planet.axialTilt.toFixed(2)}°</span></div>
